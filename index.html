@@ -33,8 +33,11 @@
     .goog-te-gadget { font-size: 0 !important; color: transparent !important; }
     .goog-te-gadget > span { display: none !important; }
     /* Убираем баннер сверху, который Google добавляет после перевода */
-    body { top: 0 !important; }
-    .skiptranslate iframe.goog-te-banner-frame { display: none !important; }
+    body { top: 0 !important; position: static !important; }
+    html { margin-top: 0 !important; }
+    .skiptranslate, iframe.goog-te-banner-frame, .goog-te-banner-frame.skiptranslate { display: none !important; visibility: hidden !important; }
+    .goog-tooltip, .goog-tooltip:hover { display: none !important; }
+    .goog-text-highlight { background: none !important; box-shadow: none !important; }
   </style>
   <div id="google_translate_widget"><div id="google_translate_element"></div></div>
   <script type="text/javascript">
