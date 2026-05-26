@@ -18,33 +18,10 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
-  <!-- Переключатель языков (Google Website Translator) -->
+  <!-- Скрытый Google Website Translator — переводом управляет LangSwitcher в Topbar -->
   <style>
-    #google_translate_widget {
-      position: fixed; top: 12px; right: 12px; z-index: 99999;
-      background: #fff; padding: 6px 10px; border-radius: 10px;
-      box-shadow: 0 4px 14px rgba(0,0,0,.12);
-      border: 1px solid rgba(0,0,0,.06);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-    /* Прячем подпись "Powered by Google" / "Технологии", но сам select оставляем */
-    .goog-te-gadget {
-      font-family: 'Plus Jakarta Sans', sans-serif !important;
-      font-size: 0 !important;
-      color: transparent !important;
-    }
-    .goog-te-gadget > span,
-    .goog-logo-link,
-    .goog-te-gadget img,
-    .goog-te-gadget a { display: none !important; }
-    .goog-te-gadget .goog-te-combo {
-      margin: 0 !important; padding: 6px 28px 6px 10px !important;
-      border-radius: 6px !important; border: 1px solid #ddd !important;
-      font-size: 13px !important; color: #333 !important;
-      background: #fff !important; cursor: pointer !important;
-      font-family: 'Plus Jakarta Sans', sans-serif !important;
-    }
-    .goog-te-gadget .goog-te-combo:hover { border-color: #999 !important; }
+    /* Плашку Google прячем — переключатель встроен в шапку через LangSwitcher */
+    #google_translate_widget { position: absolute !important; left: -9999px !important; top: -9999px !important; }
     /* Убираем баннер сверху, который Google добавляет после перевода */
     body { top: 0 !important; position: static !important; }
     html { margin-top: 0 !important; }

@@ -620,6 +620,32 @@ button { font-family: inherit; cursor: pointer; }
 }
 .role-switch .role-select:focus { outline: none; }
 
+/* Language switcher in topbar */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 4px 8px 4px 10px;
+  color: var(--color-text-muted);
+  transition: border-color .15s, color .15s;
+}
+.lang-switch:hover { color: var(--color-text); border-color: var(--color-text-muted); }
+.lang-switch .lang-select {
+  border: none;
+  background: transparent;
+  color: var(--color-text);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  padding: 4px 4px 4px 0;
+  font-family: inherit;
+}
+.lang-switch .lang-select:focus { outline: none; }
+
 /* Home button (back to landing) */
 .home-btn {
   display: inline-flex;

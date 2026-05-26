@@ -107,6 +107,58 @@ function Sidebar({ nav, active, onNav, brandColor = 'red', logo = 'AP', theme, o
   );
 }
 
+function LangSwitcher() {
+  // Список языков и их коды Google Translate
+  const LANGS = [
+    { code: 'ru', label: 'RU' },
+    { code: 'en', label: 'EN' },
+    { code: 'fr', label: 'FR' },
+  ];
+
+  const readCurrent = () => {
+    const m = document.cookie.match(/googtrans=\/[a-z]{2}\/([a-z]{2})/i);
+    return m ? m[1].toLowerCase() : 'ru';
+  };
+
+  const [current, setCurrent] = useStateAdm(readCurrent);
+
+  const onChange = (code) => {
+    const host = window.location.hostname;
+    const value = code === 'ru' ? '' : `/ru/${code}`;
+    const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString();
+    document.cookie = `googtrans=${value}; expires=${expires}; path=/`;
+    const parts = host.split('.');
+    if (parts.length > 1) {
+      const root = '.' + parts.slice(-2).join('.');
+      document.cookie = `googtrans=${value}; expires=${expires}; path=/; domain=${root}`;
+    }
+    if (code === 'ru') {
+      // Удаляем cookie для возврата к исходному языку
+      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+      if (parts.length > 1) {
+        const root = '.' + parts.slice(-2).join('.');
+        document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=${root}`;
+      }
+    }
+    setCurrent(code);
+    window.location.reload();
+  };
+
+  return (
+    <div className="lang-switch" title="Язык интерфейса">
+      <window.Ic.globe size={13} />
+      <select
+        className="lang-select"
+        value={current}
+        onChange={(e) => onChange(e.target.value)}
+        aria-label="Язык интерфейса"
+      >
+        {LANGS.map(l => <option key={l.code} value={l.code}>{l.label}</option>)}
+      </select>
+    </div>
+  );
+}
+
 function Topbar({ crumbs, sub, user = { name: 'Айкуй Мунги', role: 'SUPERADMIN' }, extras, currentRole, onRoleChange, openSpec }) {
   return (
     <header className="topbar">
@@ -152,6 +204,8 @@ function Topbar({ crumbs, sub, user = { name: 'Айкуй Мунги', role: 'SU
           <span>Спецификация</span>
         </button>
       )}
+
+      <LangSwitcher />
 
       <button
         className="home-btn"
