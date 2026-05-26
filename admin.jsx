@@ -125,35 +125,20 @@ function Topbar({ crumbs, sub, user = { name: 'Айкуй Мунги', role: 'SU
       </div>
 
       {onRoleChange && (
-        <div className="role-switch" role="radiogroup" aria-label="Просмотр от лица">
-          <button
-            className={currentRole === 'admin' ? 'active' : ''}
-            onClick={() => onRoleChange('admin')}
-            title="Просмотр как админ"
+        <div className="role-switch" aria-label="Просмотр от лица">
+          <window.Ic.user size={13} />
+          <select
+            className="role-select"
+            value={currentRole}
+            onChange={(e) => onRoleChange(e.target.value)}
+            aria-label="Просмотр от лица"
+            title="Переключить роль для просмотра"
           >
-            <window.Ic.shield size={13} /> Админ
-          </button>
-          <button
-            className={currentRole === 'partner' ? 'active' : ''}
-            onClick={() => onRoleChange('partner')}
-            title="Просмотр как партнёр"
-          >
-            <window.Ic.store size={13} /> Партнёр
-          </button>
-          <button
-            className={currentRole === 'partner_pending' ? 'active' : ''}
-            onClick={() => onRoleChange('partner_pending')}
-            title="Просмотр как партнёр на верификации"
-          >
-            <window.Ic.clock size={13} /> Pending
-          </button>
-          <button
-            className={currentRole === 'user' ? 'active' : ''}
-            onClick={() => onRoleChange('user')}
-            title="Просмотр как обычный пользователь"
-          >
-            <window.Ic.user size={13} /> Путешественник
-          </button>
+            <option value="admin">Админ</option>
+            <option value="partner">Партнёр</option>
+            <option value="partner_pending">Pending</option>
+            <option value="user">Путешественник</option>
+          </select>
         </div>
       )}
 
