@@ -27,10 +27,11 @@
       border: 1px solid rgba(0,0,0,.06);
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
-    /* Прячем «шапку» с надписью Powered by Google, но оставляем сам select видимым */
-    .goog-te-gadget { font-size: 0 !important; color: transparent !important; line-height: 1 !important; }
-    .goog-te-gadget > span { display: none !important; }
-    .goog-te-gadget > div { font-size: 13px !important; }
+    /* Прячем подпись "Powered by Google", но сам select оставляем как есть */
+    .goog-te-gadget { font-family: 'Plus Jakarta Sans', sans-serif !important; }
+    .goog-te-gadget > span,
+    .goog-logo-link,
+    .goog-te-gadget img { display: none !important; }
     .goog-te-gadget .goog-te-combo {
       margin: 0 !important; padding: 6px 28px 6px 10px !important;
       border-radius: 6px !important; border: 1px solid #ddd !important;
@@ -52,7 +53,6 @@
       new google.translate.TranslateElement({
         pageLanguage: 'ru',
         includedLanguages: 'ru,en,fr',
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
         autoDisplay: false
       }, 'google_translate_element');
     }
