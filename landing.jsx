@@ -190,6 +190,106 @@ function PaStripe({ height = 4, style }) {
   );
 }
 
+function LangSwitcher() {
+  // Список языков: код Google Translate + подпись для UI
+  const LANGS = [
+    { code: 'ru', label: 'RU', full: 'Русский' },
+    { code: 'en', label: 'EN', full: 'English' },
+    { code: 'fr', label: 'FR', full: 'Français' },
+  ];
+
+  // Текущий язык читаем из cookie googtrans (формат "/ru/en")
+  const readCurrent = () => {
+    const m = document.cookie.match(/googtrans=\/[a-z]{2}\/([a-z]{2})/i);
+    return m ? m[1].toLowerCase() : 'ru';
+  };
+
+  const [current, setCurrent] = useState(readCurrent);
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  // Закрываем дропдаун кликом вне
+  useEffect(() => {
+    const onDoc = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    document.addEventListener('mousedown', onDoc);
+    return () => document.removeEventListener('mousedown', onDoc);
+  }, []);
+
+  const setLang = (code) => {
+    // Ставим cookie googtrans для текущего домена и для корневого (.vercel.app и т.п.)
+    const host = window.location.hostname;
+    const value = code === 'ru' ? '' : `/ru/${code}`;
+    const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString();
+    // Текущий хост
+    document.cookie = `googtrans=${value}; expires=${expires}; path=/`;
+    // Корневой домен (например, .vercel.app), чтобы перевод сохранялся между поддоменами
+    const parts = host.split('.');
+    if (parts.length > 1) {
+      const rootDomain = '.' + parts.slice(-2).join('.');
+      document.cookie = `googtrans=${value}; expires=${expires}; path=/; domain=${rootDomain}`;
+    }
+    // Если выбрали русский — обнуляем куку (удаляем перевод)
+    if (code === 'ru') {
+      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+      if (parts.length > 1) {
+        const rootDomain = '.' + parts.slice(-2).join('.');
+        document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=${rootDomain}`;
+      }
+    }
+    setCurrent(code);
+    setOpen(false);
+    // Перезагрузка нужна, чтобы Google заново применил перевод по cookie
+    window.location.reload();
+  };
+
+  const currentLang = LANGS.find(l => l.code === current) || LANGS[0];
+
+  return (
+    <div className="lang-switcher" ref={ref} style={{ position: 'relative' }}>
+      <button
+        className="lang"
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+      >
+        {I.globe()} {currentLang.label}
+      </button>
+      {open && (
+        <ul
+          role="listbox"
+          style={{
+            position: 'absolute', top: 'calc(100% + 6px)', right: 0,
+            margin: 0, padding: 6, listStyle: 'none',
+            background: '#fff', border: '1px solid rgba(0,0,0,.08)',
+            borderRadius: 10, boxShadow: '0 8px 24px rgba(0,0,0,.12)',
+            minWidth: 140, zIndex: 1000,
+          }}
+        >
+          {LANGS.map(l => (
+            <li
+              key={l.code}
+              role="option"
+              aria-selected={l.code === current}
+              onClick={() => setLang(l.code)}
+              style={{
+                padding: '8px 12px', cursor: 'pointer', borderRadius: 6,
+                fontSize: 14, fontWeight: l.code === current ? 600 : 400,
+                background: l.code === current ? 'rgba(0,0,0,.04)' : 'transparent',
+                color: '#222',
+              }}
+              onMouseEnter={(e) => { if (l.code !== current) e.currentTarget.style.background = 'rgba(0,0,0,.04)'; }}
+              onMouseLeave={(e) => { if (l.code !== current) e.currentTarget.style.background = 'transparent'; }}
+            >
+              {l.full}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 function Nav({ onLogin }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
@@ -213,7 +313,8 @@ function Nav({ onLogin }) {
           <a href="#partner">Партнёрам</a>
         </div>
         <div className="nav-actions">
-          <button className="lang">{I.globe()} RU</button>
+          <LangSwitcher />
+
           <button className="btn btn-sm btn-gold" onClick={onLogin}>
             Войти в ЛК {I.arr(14)}
           </button>

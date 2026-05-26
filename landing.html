@@ -18,19 +18,10 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
-  <!-- Переключатель языков (Google Website Translator) -->
+  <!-- Скрытый Google Website Translator — переводом управляет кнопка в шапке -->
   <style>
-    #google_translate_widget {
-      position: fixed; top: 12px; right: 12px; z-index: 99999;
-      background: #fff; padding: 6px 10px; border-radius: 10px;
-      box-shadow: 0 4px 14px rgba(0,0,0,.12);
-      border: 1px solid rgba(0,0,0,.06);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-    .goog-te-gadget .goog-te-combo { margin: 0; padding: 4px 8px; border-radius: 6px; border: 1px solid #ddd; font-size: 13px; cursor: pointer; }
-    .goog-te-gadget > span > a { display: none !important; }
-    .goog-te-gadget { font-size: 0 !important; color: transparent !important; }
-    .goog-te-gadget > span { display: none !important; }
+    /* Плашку Google прячем — селектор языка вынесен в шапку лендинга */
+    #google_translate_widget { position: absolute !important; left: -9999px !important; top: -9999px !important; }
     body { top: 0 !important; position: static !important; }
     html { margin-top: 0 !important; }
     .skiptranslate, iframe.goog-te-banner-frame, .goog-te-banner-frame.skiptranslate { display: none !important; visibility: hidden !important; }
