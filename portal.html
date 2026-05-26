@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AfricaPortal — Туристический портал Африки</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+
+  <!-- Order matters: landing.css then styles.css so dashboard's body
+       defaults are the final say. Each app uses scoped class names so
+       there's no real overlap. -->
+  <link rel="stylesheet" href="landing.css" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Leaflet (GIS-карта) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <!-- Lucide Icons (UMD) — современный icon-set популярных UI-дизайнов -->
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <template id="__bundler_thumbnail" data-bg-color="#1A0A00">
+    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+      <rect width="1200" height="800" fill="#1A0A00" />
+      <text x="600" y="380" text-anchor="middle"
+        font-family="DM Serif Display, Georgia, serif"
+        font-size="220" fill="#F5C842"
+        letter-spacing="-6">AP</text>
+      <text x="600" y="470" text-anchor="middle"
+        font-family="Plus Jakarta Sans, sans-serif"
+        font-size="34" fill="#F4EFE6"
+        letter-spacing="6">AFRICA PORTAL</text>
+      <g transform="translate(360,540)">
+        <rect width="120" height="14" x="0"   fill="#D32F2F" />
+        <rect width="120" height="14" x="120" fill="#1A0A00" stroke="#3D2A14" />
+        <rect width="120" height="14" x="240" fill="#2E7D32" />
+        <rect width="120" height="14" x="360" fill="#F5C842" />
+      </g>
+    </svg>
+  </template>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script>
+    // Tell landing.jsx and app.jsx not to auto-mount — portal.jsx will mount.
+    window.__SKIP_AUTO_MOUNT = true;
+  </script>
+
+  <script type="text/babel" src="data.jsx"></script>
+  <script type="text/babel" src="ui.jsx"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="admin.jsx"></script>
+  <script type="text/babel" src="partner.jsx"></script>
+  <script type="text/babel" src="user.jsx"></script>
+  <script type="text/babel" src="landing.jsx"></script>
+  <script type="text/babel" src="app.jsx"></script>
+  <script type="text/babel" src="portal.jsx"></script>
+</body>
+</html>
